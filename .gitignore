@@ -1,0 +1,10 @@
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.secret.yaml
+!*.secret.yaml.example
+charts/
+*.tgz
+.vault-token

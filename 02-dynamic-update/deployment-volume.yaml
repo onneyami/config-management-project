@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamic-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dynamic
+  template:
+    metadata:
+      labels:
+        app: dynamic
+    spec:
+      containers:
+      - name: app
+        image: dynamic-app:latest  
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: dynamic-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamic-app
+  namespace: default
+spec:
+  selector:
+    app: dynamic
+  ports:
+  - port: 80
+    targetPort: 8080

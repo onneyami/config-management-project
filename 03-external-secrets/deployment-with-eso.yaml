@@ -1,41 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo-app-env
+  name: app-with-eso
   namespace: default
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: demo-env
+      app: eso-demo
   template:
     metadata:
       labels:
-        app: demo-env
+        app: eso-demo
     spec:
       containers:
       - name: app
         image: nginx:latest
-        ports:
-        - containerPort: 80
         env:
-        - name: APP_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: APP_ENV
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: LOG_LEVEL
         - name: API_KEY
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: app-secret-from-vault
               key: API_KEY
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: app-secret-from-vault
               key: DB_PASSWORD

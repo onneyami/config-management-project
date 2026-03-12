@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dynamic-config
+  namespace: default
+data:
+  config.json: |
+    {
+      "app_env": "production",
+      "log_level": "debug",
+      "api_url": "https://api.example.com",
+      "version": "v1"
+    }

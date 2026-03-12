@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-reloader
+  namespace: default
+  annotations:
+    reloader.stakater.com/auto: "true"  
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reloader-demo
+  template:
+    metadata:
+      labels:
+        app: reloader-demo
+    spec:
+      containers:
+      - name: app
+        image: nginx:latest
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secret
